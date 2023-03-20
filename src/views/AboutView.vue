@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>olá</div>
 </template>
 
 <script setup></script>
