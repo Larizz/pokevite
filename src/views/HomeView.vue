@@ -3,20 +3,12 @@
     <div class="container text-center">
       <div class="row mt-4">
         <div class="col-sm-12 col-md-6">
-          <div class="card" style="width: 18rem">
-            <img
-              src="https://i.pinimg.com/originals/ba/71/ed/ba71ed871f4dbef88ec3df2241f08586.jpg"
-              class="card-img"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-            </div>
-          </div>
+          <cardPokemonSelected
+            :name="pokemonSelected?.name"
+            :xp="pokemonSelected?.base_experience"
+            :height="pokemonSelected?.height"
+            :img="pokemonSelected?.sprites.other.dream_world.front_default"
+          />
         </div>
         <div class="col-sm-12 col-md-6">
           <div class="card">
@@ -26,6 +18,7 @@
                   >Search...</label
                 >
                 <input
+                  v-model="searchPokemonFields"
                   type="text"
                   class="form-control"
                   id="exampleFormControlInput1"
@@ -33,10 +26,11 @@
                 />
               </div>
               <ListPokemons
-                v-for="pokemon in pokemons"
+                v-for="pokemon in pokemonsFiltered"
                 :key="pokemon.name"
                 :name="pokemon.name"
                 :urlBaseSvg="urlBaseSvg + pokemon.url.split('/')[6] + '.svg'"
+                @click="SelectPokemon(pokemon)"
               />
             </div>
           </div>
@@ -47,21 +41,41 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import ListPokemons from "../components/ListPokemons.vue";
+import cardPokemonSelected from "../components/CardPokemonSelected.vue";
 
 let pokemons = ref([]);
 let urlBaseSvg = ref(
   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/"
 );
+let searchPokemonFields = ref("");
+let pokemonSelected = ref();
 
 onMounted(() => {
   fetch("https:pokeapi.co/api/v2/pokemon?limit=151&offset=0")
     .then((res) => res.json())
     .then((res) => (pokemons.value = res.results));
-
-  console.log(pokemons);
 });
+
+const pokemonsFiltered = computed(() => {
+  if (pokemons.value && searchPokemonFields.value) {
+    return pokemons.value.filter((pokemon) =>
+      pokemon.name
+        .toLowerCase()
+        .includes(searchPokemonFields.value.toLowerCase())
+    );
+  }
+  return pokemons.value;
+});
+
+const SelectPokemon = async (pokemon) => {
+  await fetch(pokemon.url)
+    .then((res) => res.json())
+    .then((res) => (pokemonSelected.value = res));
+
+  console.log(pokemonSelected.value);
+};
 </script>
 
 <style scoped>
