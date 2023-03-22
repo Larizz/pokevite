@@ -1,17 +1,18 @@
 <template>
   <main>
     <div class="container text-center">
-      <div class="row mt-4">
+      <div class="row mt-5">
         <div class="col-sm-12 col-md-6">
           <cardPokemonSelected
             :name="pokemonSelected?.name"
             :xp="pokemonSelected?.base_experience"
             :height="pokemonSelected?.height"
             :img="pokemonSelected?.sprites.other.dream_world.front_default"
+            :loading="loading"
           />
         </div>
         <div class="col-sm-12 col-md-6">
-          <div class="card">
+          <div class="card card-list">
             <div class="card-body row">
               <div class="mb-3">
                 <label hidden for="searchPokemonFields" class="form-label"
@@ -51,6 +52,7 @@ let urlBaseSvg = ref(
 );
 let searchPokemonFields = ref("");
 let pokemonSelected = ref();
+let loading = ref(false);
 
 onMounted(() => {
   fetch("https:pokeapi.co/api/v2/pokemon?limit=151&offset=0")
@@ -70,9 +72,12 @@ const pokemonsFiltered = computed(() => {
 });
 
 const SelectPokemon = async (pokemon) => {
+  loading.value = true;
   await fetch(pokemon.url)
     .then((res) => res.json())
-    .then((res) => (pokemonSelected.value = res));
+    .then((res) => (pokemonSelected.value = res))
+    .catch((err) => alert(err))
+    .finally(() => (loading.value = false));
 
   console.log(pokemonSelected.value);
 };
@@ -83,5 +88,11 @@ const SelectPokemon = async (pokemon) => {
   width: 10rem;
   height: 10rem;
   margin-left: 4rem;
+}
+
+.card-list {
+  max-height: 40rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 </style>
