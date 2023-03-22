@@ -94,5 +94,6 @@ const SelectPokemon = async (pokemon) => {
   max-height: 40rem;
   overflow-y: scroll;
   overflow-x: hidden;
+  background-color: rgba(000, 000, 000, 0.2);
 }
 </style>

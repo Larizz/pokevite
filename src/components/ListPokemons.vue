@@ -13,21 +13,23 @@ const pokemon = defineProps(["name", "urlBaseSvg"]);
 
 <style scoped>
 .card {
-  background: rgb(5, 56, 213);
+  background: rgb(0, 0, 0);
   background: radial-gradient(
     circle,
-    rgba(5, 56, 213, 0.422) 27%,
-    rgba(0, 213, 255, 0.492) 100%
+    rgba(0, 0, 0, 0.16430322128851538) 0%,
+    rgba(0, 0, 0, 0.3) 98%,
+    rgba(0, 0, 0, 0.4780287114845938) 100%,
+    rgba(247, 247, 242, 1) 100%
   );
-  cursor: pointer;
 }
 
 .card:hover {
-  background: rgb(5, 56, 213);
   background: radial-gradient(
     circle,
-    rgba(5, 56, 213, 0.522) 27%,
-    rgba(0, 213, 255, 0.592) 100%
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.7) 98%,
+    rgba(0, 0, 0, 0.7) 100%,
+    rgba(247, 247, 242, 1) 100%
   );
 }
 

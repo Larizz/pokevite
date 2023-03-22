@@ -1,10 +1,13 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark"
+      style="background-color: black"
+    >
       <div class="container-fluid">
         <router-link class="navbar-brand" to="/">
           <img
-            src="https://cdn-icons-png.flaticon.com/512/188/188987.png"
+            src="./assets/pikachu.svg"
             alt="Logo"
             width="30"
             height="24"
@@ -41,7 +44,7 @@
       <router-view></router-view>
     </div>
   </div>
-  <footer class="bg-primary text-light">
+  <footer class="bg-dark text-light">
     <div>Design in {{ new Date().getFullYear() }}</div>
   </footer>
 </template>
